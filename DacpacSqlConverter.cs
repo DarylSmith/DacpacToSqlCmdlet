@@ -5,10 +5,9 @@ using System.Text;
 using System.IO;
 using System.Management.Automation;
 using System.Web.Http.Filters;
-
-
 using Microsoft.SqlServer.Dac.Model;
-using System.IO;
+using Microsoft.SqlServer.Dac;
+
 
 namespace DacpacSqlConverter
 {
@@ -39,41 +38,76 @@ namespace DacpacSqlConverter
             _filters = new List<IFilter>(filters);
             QueryScopes = DacQueryScopes.UserDefined;
         }
+    }
 
-        [Cmdlet(VerbsCommon.Format, "DacpacAsSql")]
-    public class DacpacToSqlCmdlet : Cmdlet
+    [Cmdlet(VerbsCommon.Format, "DacpacAsSql")]
+    public class DacpacToSqlCmdlet
     {
         // Declare the parameters for the cmdlet.
         [Parameter(Mandatory = true)]
         public string InputPath { get; set; }
 
 
+        public DacQueryScopes QueryScopes
+        {
+            get;
+            set;
+        }
+
+
         // Declare the parameters for the cmdlet.
         [Parameter(Mandatory = true)]
         public string OutputPath { get; set; }
 
-
-
-
-        protected override void ProcessRecord()
+        public void Test()
         {
+            ProcessRecord();
+
+        }
 
 
-                using (StreamWriter sw = new StreamWriter(OutputPath))
-            using (TSqlModel modelFromDacpac = new TSqlModel(InputPath))
+
+        protected void ProcessRecord()
+        {
+            string directory = "C:/dacpac/";
+            using (TSqlModel modelFromDacpac = new TSqlModel(@"C:\dacpac\staging.dacpac"))
             {
-                IEnumerable<TSqlObject> allObjects = model.GetObjects(QueryScopes);
-                foreach (TSqlObject tsqlObject allObjects)
+                QueryScopes = DacQueryScopes.UserDefined;
+                IEnumerable<TSqlObject> allObjects = modelFromDacpac.GetObjects(QueryScopes);
+                foreach (TSqlObject tsqlObject in allObjects)
                 {
                     string script;
+
                     if (tsqlObject.TryGetScript(out script))
                     {
-                        sw.WriteLine(modelFromDacpac)
-    
-                        }
+                        Console.WriteLine("Adding " + directory + tsqlObject.ObjectType.Name);
+                        saveToDirectory(directory + tsqlObject.ObjectType.Name, tsqlObject.Name.ToString(), script);
+                    }
 
                 }
+
             }
         }
+
+
+
+        private void saveToDirectory(string pathName, string objName, string script)
+        {
+            Directory.CreateDirectory(pathName); // If the directory already exists, this method does nothing.
+
+            using (StreamWriter sw = new StreamWriter(string.Format("{0}/{1}.sql", pathName, objName)))
+            {
+
+                sw.Write(script);
+                sw.Flush();
+
+            }
+
+
+        }
+
+
+
     }
+
 }

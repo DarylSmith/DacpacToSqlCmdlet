@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DacpacSqlConverter</RootNamespace>
     <AssemblyName>DacpacSqlConverter</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,51 +31,54 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Data.Tools.Contracts.11, Version=11.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.DACFx3.1.0.1\lib\Microsoft.Data.Tools.Contracts.11.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="DacpacSqlConverter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DacpacSqlConverter.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.Tools.Schema.Sql, Version=10.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.DACFx3.1.0.1\lib\Microsoft.Data.Tools.Schema.Sql.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.Data.Tools.Contracts.11, Version=11.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.DACFx3.1.0.1\lib\Microsoft.Data.Tools.Contracts.11.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Tools.Schema.Sql, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\140\DAC\bin\Microsoft.Data.Tools.Schema.Sql.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.Tools.Schema.Tasks.Sql.11, Version=11.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.DACFx3.1.0.1\lib\Microsoft.Data.Tools.Schema.Tasks.Sql.11.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>packages\Microsoft.DACFx3.1.0.1\lib\Microsoft.Data.Tools.Schema.Tasks.Sql.11.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.Tools.Schema.Utilities.Sql.11, Version=11.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.DACFx3.1.0.1\lib\Microsoft.Data.Tools.Schema.Utilities.Sql.11.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>packages\Microsoft.DACFx3.1.0.1\lib\Microsoft.Data.Tools.Schema.Utilities.Sql.11.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.Tools.Utilities, Version=10.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.DACFx3.1.0.1\lib\Microsoft.Data.Tools.Utilities.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.SqlServer.Dac, Version=10.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.DACFx3.1.0.1\lib\Microsoft.SqlServer.Dac.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.SqlServer.Dac, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\140\DAC\bin\Microsoft.SqlServer.Dac.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Dac.Extensions, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.SqlServer.Dac-x86.12.0.2875.2\lib\Microsoft.SqlServer.Dac.Extensions.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\140\DAC\bin\Microsoft.SqlServer.Dac.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.TransactSql.ScriptDom, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\140\DAC\bin\Microsoft.SqlServer.TransactSql.ScriptDom.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\140\DAC\bin\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.PowerShell.5.ReferenceAssemblies.1.1.0\lib\net4\System.Management.Automation.dll</HintPath>
+      <HintPath>packages\Microsoft.PowerShell.5.ReferenceAssemblies.1.1.0\lib\net4\System.Management.Automation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.4\lib\net45\System.Web.Http.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebApi.Core.5.2.4\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -86,6 +90,7 @@
   <ItemGroup>
     <Compile Include="DacpacSqlConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlDacpacConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
