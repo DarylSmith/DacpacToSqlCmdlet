@@ -12,40 +12,11 @@ using Microsoft.SqlServer.Dac;
 namespace DacpacSqlConverter
 {
 
-    public class ModelFilterer
-    {
-
-        public DacQueryScopes QueryScopes
-        {
-            get;
-            set;
-        }
-
-        private IList<IFilter> _filters;
-
-        public ModelFilterer(params IFilter[] filters)
-            : this((IList<IFilter>)filters)
-        {
-        }
-
-        public ModelFilterer(IList<IFilter> filters)
-        {
-            if (filters == null
-                || filters.Count == 0)
-            {
-                throw new ArgumentException("At least one filter must be specified", "filters");
-            }
-            _filters = new List<IFilter>(filters);
-            QueryScopes = DacQueryScopes.UserDefined;
-        }
-    }
 
     [Cmdlet(VerbsCommon.Format, "DacpacAsSql")]
-    public class DacpacToSqlCmdlet
+    public class DacpacToSqlCmdlet : Cmdlet
     {
-        // Declare the parameters for the cmdlet.
-        [Parameter(Mandatory = true)]
-        public string InputPath { get; set; }
+       
 
 
         public DacQueryScopes QueryScopes
@@ -54,10 +25,13 @@ namespace DacpacSqlConverter
             set;
         }
 
-
-        // Declare the parameters for the cmdlet.
+        // Directory for storing the output sql files
         [Parameter(Mandatory = true)]
-        public string OutputPath { get; set; }
+        public string OutputDirectory { get; set; }
+
+        // The dacpac file being used
+        [Parameter(Mandatory = true)]
+        public string InputPath { get; set; }
 
         public void Test()
         {
@@ -65,12 +39,12 @@ namespace DacpacSqlConverter
 
         }
 
-
-
-        protected void ProcessRecord()
+        protected override void ProcessRecord()
         {
-            string directory = "C:/dacpac/";
-            using (TSqlModel modelFromDacpac = new TSqlModel(@"C:\dacpac\staging.dacpac"))
+            string directory = OutputDirectory;
+
+            // get the data frm the dacpac and iterate through each file
+            using (TSqlModel modelFromDacpac = new TSqlModel(InputPath))
             {
                 QueryScopes = DacQueryScopes.UserDefined;
                 IEnumerable<TSqlObject> allObjects = modelFromDacpac.GetObjects(QueryScopes);
@@ -78,6 +52,7 @@ namespace DacpacSqlConverter
                 {
                     string script;
 
+                    // if this is a tsql script, save it to the directory according to its type
                     if (tsqlObject.TryGetScript(out script))
                     {
                         Console.WriteLine("Adding " + directory + tsqlObject.ObjectType.Name);
@@ -88,8 +63,6 @@ namespace DacpacSqlConverter
 
             }
         }
-
-
 
         private void saveToDirectory(string pathName, string objName, string script)
         {

@@ -14,7 +14,7 @@ namespace DacpacTestProject
             //cmd.Test();
 
             SqlDacpacConverter cmd = new SqlDacpacConverter();
-            cmd.BuildDacpacFromFiles();
+            //cmd.BuildDacpacFromFiles();
         }
     }
 }

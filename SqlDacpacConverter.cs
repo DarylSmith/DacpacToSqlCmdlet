@@ -11,14 +11,25 @@ using Microsoft.SqlServer.Dac;
 
 namespace DacpacSqlConverter
 {
-    public class SqlDacpacConverter
+    [Cmdlet(VerbsCommon.Format, "SqlAsDacpac")]
+    public class SqlDacpacConverter :Cmdlet
     {
 
-        public void BuildDacpacFromFiles()
+        // Declare the parameters for the cmdlet.
+        [Parameter(Mandatory = true)]
+        public string OutputPath { get; set; }
+
+        // Declare the parameters for the cmdlet.
+        [Parameter(Mandatory = true)]
+        public string FileDirectory { get; set; }
+
+        protected override void ProcessRecord()
         {
+            // create an instance of a tsqmodel to store the sql records
             using (TSqlModel model = new TSqlModel(SqlServerVersion.Sql140, new TSqlModelOptions()))
             {
-                foreach (string file in System.IO.Directory.GetFiles("C:/dacpac", "*.sql", SearchOption.AllDirectories))
+                // iterate through each file and add the sql script to the model
+                foreach (string file in System.IO.Directory.GetFiles(FileDirectory , "*.sql", SearchOption.AllDirectories))
                 {
                     using (StreamReader sr = new StreamReader(file))
                     {
@@ -27,8 +38,9 @@ namespace DacpacSqlConverter
                     }
                 }
 
+                // build the sql directory and add to the output path
                 DacPackageExtensions.BuildPackage(
-                  "C:/dacpac/test.dacpac",
+                  OutputPath,
                   model,
                   new PackageMetadata(), // Describes the dacpac. 
                   new PackageOptions());  // Use this to specify the deployment contributors, refactor log to include in package
