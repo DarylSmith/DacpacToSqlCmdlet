@@ -46,6 +46,9 @@ namespace DacpacSqlConverter
             // get the data frm the dacpac and iterate through each file
             using (TSqlModel modelFromDacpac = new TSqlModel(InputPath))
             {
+                //list of objects not to be added to source control
+                string[] objectsNotIncluded = { "RoleMembership", "Synonym", "User", "Login" };
+
                 QueryScopes = DacQueryScopes.UserDefined;
                 IEnumerable<TSqlObject> allObjects = modelFromDacpac.GetObjects(QueryScopes);
                 foreach (TSqlObject tsqlObject in allObjects)
@@ -53,7 +56,7 @@ namespace DacpacSqlConverter
                     string script;
 
                     // if this is a tsql script, save it to the directory according to its type
-                    if (tsqlObject.TryGetScript(out script))
+                    if (tsqlObject.TryGetScript(out script) && !objectsNotIncluded.Contains(tsqlObject.ObjectType.Name))
                     {
                         Console.WriteLine("Adding " + directory + tsqlObject.ObjectType.Name);
                         saveToDirectory(directory + tsqlObject.ObjectType.Name, tsqlObject.Name.ToString(), script);
