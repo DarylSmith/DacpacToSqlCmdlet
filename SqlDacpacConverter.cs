@@ -26,7 +26,7 @@ namespace DacpacSqlConverter
         protected override void ProcessRecord()
         {
             // create an instance of a tsqmodel to store the sql records
-            using (TSqlModel model = new TSqlModel(SqlServerVersion.Sql140, new TSqlModelOptions()))
+            using (TSqlModel model = new TSqlModel(SqlServerVersion.Sql130, new TSqlModelOptions()))
             {
                 // iterate through each file and add the sql script to the model
                 foreach (string file in System.IO.Directory.GetFiles(FileDirectory , "*.sql", SearchOption.AllDirectories))

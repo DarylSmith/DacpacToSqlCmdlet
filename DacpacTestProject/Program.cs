@@ -14,7 +14,9 @@ namespace DacpacTestProject
             //cmd.Test();
 
             SqlDacpacConverter cmd = new SqlDacpacConverter();
-            //cmd.BuildDacpacFromFiles();
+            cmd.OutputPath = "C:/dacpac/t1.dacpac";
+            cmd.FileDirectory = "C:/Users/smith/Documents/GitHub/LifespeakSqlServer/Redesign/";
+           //cmd.ProcessRecord();
         }
     }
 }
