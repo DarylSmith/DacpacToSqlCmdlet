@@ -58,7 +58,7 @@ namespace DacpacSqlConverter
                     // if this is a tsql script, save it to the directory according to its type
                     if (tsqlObject.TryGetScript(out script) && !objectsNotIncluded.Contains(tsqlObject.ObjectType.Name))
                     {
-                        Console.WriteLine("Adding " + directory + tsqlObject.ObjectType.Name);
+                        Console.WriteLine("Adding " + directory + tsqlObject.ObjectType.Name +"/" + tsqlObject.Name.ToString());
                         saveToDirectory(directory + tsqlObject.ObjectType.Name, tsqlObject.Name.ToString(), script);
                     }
 
