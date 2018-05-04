@@ -51,8 +51,12 @@ namespace DacpacSqlConverter
 
                 QueryScopes = DacQueryScopes.UserDefined;
                 IEnumerable<TSqlObject> allObjects = modelFromDacpac.GetObjects(QueryScopes);
+
+                //keep a list of all the file names -- if the name isn't there, we will delete the item
+                List<string> sqlFiles = new List<string>();
                 foreach (TSqlObject tsqlObject in allObjects)
                 {
+                    sqlFiles.Add(tsqlObject.Name.ToString());
                     string script;
 
                     // if this is a tsql script, save it to the directory according to its type
@@ -60,8 +64,28 @@ namespace DacpacSqlConverter
                     {
                         Console.WriteLine("Adding " + directory + tsqlObject.ObjectType.Name +"/" + tsqlObject.Name.ToString());
                         saveToDirectory(directory + tsqlObject.ObjectType.Name, tsqlObject.Name.ToString(), script);
+                     
                     }
 
+                }
+
+                //get all the files in the directory if they are not in the file list, then delete them
+                string[] fileNames = Directory.GetFiles(OutputDirectory, "*.sql", SearchOption.AllDirectories);
+
+                sqlFiles = sqlFiles.OrderBy(e => e).ToList();
+                List<string> badItems = new List<string>();
+
+                foreach (string fileName in fileNames)
+                {
+                    string dbObj = fileName.Split(Path.DirectorySeparatorChar).Last().Replace(".sql", string.Empty);
+                    if (!sqlFiles.Contains(dbObj))
+                    {
+                        badItems.Add(dbObj);
+                        Console.WriteLine("Deleting " + fileName);
+                        File.Delete(fileName);
+                    }
+
+                    
                 }
 
             }
