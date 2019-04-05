@@ -25,28 +25,40 @@ namespace DacpacSqlConverter
 
         protected override void ProcessRecord()
         {
-            // create an instance of a tsqmodel to store the sql records
-            using (TSqlModel model = new TSqlModel(SqlServerVersion.Sql130, new TSqlModelOptions()))
+            string script = string.Empty;
+            try
             {
-                // iterate through each file and add the sql script to the model
-                foreach (string file in System.IO.Directory.GetFiles(FileDirectory , "*.sql", SearchOption.AllDirectories))
+
+                // create an instance of a tsqmodel to store the sql records
+                using (TSqlModel model = new TSqlModel(SqlServerVersion.Sql130, new TSqlModelOptions()))
                 {
-                    using (StreamReader sr = new StreamReader(file))
+                    // iterate through each file and add the sql script to the model
+                    foreach (string file in System.IO.Directory.GetFiles(FileDirectory, "*.sql", SearchOption.AllDirectories))
                     {
-                        string script = sr.ReadToEnd();
-                        model.AddObjects(script);
+                        using (StreamReader sr = new StreamReader(file))
+                        {
+                            script = sr.ReadToEnd();
+                            model.AddObjects(script);
+                        }
                     }
+
+                    // build the sql directory and add to the output path
+                    DacPackageExtensions.BuildPackage(
+                      OutputPath,
+                      model,
+                      new PackageMetadata(), // Describes the dacpac. 
+                      new PackageOptions());  // Use this to specify the deployment contributors, refactor log to include in package
+
                 }
 
-                // build the sql directory and add to the output path
-                DacPackageExtensions.BuildPackage(
-                  OutputPath,
-                  model,
-                  new PackageMetadata(), // Describes the dacpac. 
-                  new PackageOptions());  // Use this to specify the deployment contributors, refactor log to include in package
 
             }
-
+            catch(Exception ex)
+            {
+                WriteWarning(ex.ToString());
+                WriteWarning(script);
+                throw (ex);
+            }
 
         }
     }
